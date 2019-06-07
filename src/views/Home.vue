@@ -1,18 +1,20 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <BugList msg="Welcome to Your Vue.js App"/>
+    <BugList />
+    <PostForm />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import PostForm from '@/components/PostForm.vue'
 import BugList from '@/components/BugList.vue'
 
 export default {
   name: 'home',
   components: {
-    BugList
+    BugList,
+    PostForm
   }
 }
 </script>

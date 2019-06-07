@@ -22,6 +22,8 @@
             <router-link class="nav-link" to="/about">About</router-link>
           </li>
         </ul>
+        <img class="float-rightKs" style="height: 9vh; width: auto;" alt="Vue logo" src="@/assets/ScarabH3.png">
+
       </div>
     </nav>
     <router-view />
