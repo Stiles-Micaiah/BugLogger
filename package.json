@@ -7,7 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.29",
     "axios": "^0.19.0",
+    "babel": "^6.23.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuejs-paginator": "^2.0.2",

@@ -1,31 +1,22 @@
+
 <template>
   <div class="bug-list">
     <ul class="pagination">
       <li class="page-item ">
-        <a class="page-link" href="javascript:void(0)">&laquo;</a>
+        <a class="page-link" @click="page > 0 ? page-- : page = 0" href="javascript:void(0)">&laquo;</a>
       </li>
-      <li class="page-item active">
-        <a class="page-link" href="javascript:void(0)">1</a>
+
+      <li class="page-item"v-for="pg in pages" >
+        <a class="page-link" @click="page = pg - 1" href="javascript:void(0)">{{pg}}</a>
       </li>
+     
       <li class="page-item">
-        <a class="page-link" href="javascript:void(0)">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:void(0)">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:void(0)">4</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:void(0)">5</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:void(0)">&raquo;</a>
+        <a class="page-link" @click="page < pages ? page++ : page = pages" href="javascript:void(0)">&raquo;</a>
       </li>
     </ul>
 
     <div id="bug-list-loop" class="list-group">
-      <div class="loop-this" v-for="bug in bugs">
+      <div class="loop-this" v-for="bug in activeBugs">
         <div href="javascript:void(0)" class="list-group-item list-group-item-action active">j
           {{bug.title}}
         </div>
@@ -45,7 +36,6 @@
 
 
 
-
   </div>
 
 </template>
@@ -53,26 +43,36 @@
 <script>
   export default {
     name: 'BugList',
-
+    data(){
+      return {
+        page: 0,
+      }
+    },
     mounted() {
       this.$store.dispatch("getBugs");
 
-      var listLength = $('#bug-list-group .loop-this').length;
+      // var listLength = $('#bug-list-group .loop-this').length;
 
-      alert($('#bug-list-group .loop-this').length);
+      // alert($('#bug-list-group .loop-this').length);
 
-      var limitPerPage = 4;
+      // var limitPerPage = 4;
 
-      var itemsHide = $("#bug-list-group .loop-this:gt(" + (limitPerPage - 1) + ")")
+      // var itemsHide = $("#bug-list-group .loop-this:gt(" + (limitPerPage - 1) + ")")
 
-      itemsHide.hide();
+      // itemsHide.hide();
     },
 
 
 
     computed: {
       bugs() {
-        return this.$store.state.bugs.results
+        return this.$store.state.bugs
+      },
+      activeBugs(){
+        return this.bugs.slice(this.page * 4, this.page * 4 + 4);
+      },
+      pages(){
+        return Math.ceil(this.bugs.length / 4)
       }
 
     },
