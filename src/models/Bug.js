@@ -5,5 +5,8 @@ export default class Bug {
     this.creator = data.creator
     this.user = data.user
     this.title = data.title
+    this._id = data._id
+    this.created = data.createdAt
+    this.updated = data.updatedAt
   }
 }

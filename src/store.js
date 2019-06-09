@@ -15,8 +15,7 @@ export default new Vuex.Store({
   state: {
     bugs: [],
     bug: {},
-    bugComments: [],
-    pageContent: 4
+    bugComments: []
   },
   mutations: {
     setBugs(state, data = []) {
@@ -24,21 +23,9 @@ export default new Vuex.Store({
     },
     setBug(state, data = []) {
       state.bugs = data
-    },
-    setPageContent(state, data) {
-      state.pageContent = data
     }
   },
   actions: {
-
-    paginate({ commit, dispatch }, data) {
-      let listLength = $('#bug-list-group .loop-this').length;
-      let limitPerPage = 4;
-      let itemsHide = $("#bug-list-group .loop-this:gt(" + (limitPerPage - 1) + ")")
-      alert($('#bug-list-group .loop-this').length);
-      itemsHide.hide();
-    },
-
     getBugs({ commit, dispatch }, data) {
       api.get("")
         .then(res => {

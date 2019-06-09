@@ -1,5 +1,5 @@
 <template>
-  <div id="PostForm">
+  <div class="PostForm">
     <div class="card text-white bg-warning mb-3" style="max-width: 20rem;">
       <div class="card-header">Report Card</div>
       <div class="card-body">
