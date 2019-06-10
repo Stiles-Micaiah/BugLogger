@@ -9,15 +9,15 @@
 
       <div class="card-body">
         <div class="row">
-          <div id="bug-list-loop" v-for="comment in comments" class="list-group col-4">
+          <div id="bug-list-loop"  class="list-group col-4">
             <a href="javascript:void(0)"
               class="list-group-item list-group-item-action flex-column align-items-start active">
               <h5 class="mb-1">
-                {{comment.creator}}
+                <!-- {{comment.creator}} -->
               </h5>
             </a>
             <a href="javascript:void(0)" class="list-group-item list-group-item-action flex-column align-items-start">
-              <p>{{comment.content}}</p>
+              <!-- <p>{{comment.content}}</p> -->
             </a>
           </div>
         </div>
@@ -68,7 +68,7 @@
     mounted() {
 
       this.$store.dispatch('getBugById', this.id)
-      this.$store.dispatch('getComments', this.id)
+      // this.$store.dispatch('getComments', this.id)
 
     },
     computed: {
@@ -76,9 +76,9 @@
         return this.$store.state.bug
 
       },
-      comments() {
-        return this.$store.state.comments
-      }
+      // comments() {
+      //   // return this.$store.state.comments
+      // }
 
       // activeBug() {
       //   return this.bugs.slice(this.page * 4, this.page * 4 + 4);
@@ -96,12 +96,12 @@
         }
         this.$store.dispatch('postComment', data)
       },
-      deletePost(id) {
-        this.$store.dispatch('deleteBug', id)
-      },
-      deleteComment(id) {
-        this.$store.dispatch('deleteComment', id)
-      },
+      // deletePost(id) {
+      //   this.$store.dispatch('deleteBug', id)
+      // },
+      // deleteComment(id) {
+      //   this.$store.dispatch('deleteComment', id)
+      // },
     },
   }
 

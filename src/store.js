@@ -57,7 +57,7 @@ export default new Vuex.Store({
       // console.log("Bugs/" + id)
     },
     getComments({ commit, dispatch }, id) {
-      api.get("Bugs/" + id + "notes")
+      api.get("Bugs/" + id + "/notes")
         .then(res => {
           commit('setComments')
           console.log('getComments', res)
@@ -75,20 +75,8 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-
-
-async getwhatever({commit, dispatch}, payload) {
-  try {
-    let res = await api.get('/Bugs', payload)
-  } catch(err) {
-    console.error(err)
-  }
-}
-
-
-
     postComment({ commit, dispatch }, data) {
-      api.post('Bugs/' + data.id + "/notes", data.data)
+      api.post('Bugs/' + "5cfaecb36d9a220014086b53" + "/notes", data.data)
         .then(res => {
           dispatch('getComments')
         })
@@ -106,7 +94,7 @@ async getwhatever({commit, dispatch}, payload) {
         })
     },
     deleteComment({ commit, dispatch }, id) {
-      api.delete("Bugs/" + id + "notes")
+      api.delete("Bugs/" + id + "/notes" + id)
         .then(res => {
           dispatch('getComments')
         })
