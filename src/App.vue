@@ -33,6 +33,9 @@
 <script>
   export default {
     name: 'Navbar',
+    mounted() {
+      alert('If you see this, I am not done with this site. Please dont recommend a fix unless youve looked at the code. I have more than is showing probably, the rest is commented out until the code is ready for it')
+    }
 
   }
 </script>

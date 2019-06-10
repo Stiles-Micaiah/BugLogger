@@ -17,7 +17,7 @@
     </div>
 
 
-    <div class="row d-flex justify-content-center">
+    <div style="min-width: 300px;" class="row d-flex justify-content-center">
       <div id="bug-list-loop" v-for="bug in activeBugs" class="list-group col-4">
         <a href="javascript:void(0)"
           class="list-group-item list-group-item-action flex-column align-items-start active">
@@ -25,9 +25,17 @@
             <h5 class="mb-1">
               {{bug.title}}
             </h5>
-            <small>
-              {{timeSince(bug._id)}}
-            </small>
+            <div class="date&details">
+              <!--vvvvvv please HELP with alignment vvvvvvv-->
+
+              <small class="align-items-end">
+                <!--^^^^please HELP with alignment^^^^^^-->
+                {{timeSince(bug._id)}}
+              </small>
+              <button class="btn btn-sm btn-info d-flex flex-column rounded" @click="getDetails(bug._id)">
+                Details
+              </button>
+            </div>
           </div>
           <p class="mb-1">
             {{bug.description}}
@@ -88,6 +96,9 @@
 
     },
     methods: {
+      getDetails(id) {
+        this.$store.dispatch("getDetailedView", id)
+      },
       deletePost(data) {
         this.$store.dispatch('deleteBug', data)
       },

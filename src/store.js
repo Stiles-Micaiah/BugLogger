@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios';
+import router from './router';
+import { stat } from 'fs';
 
 Vue.use(Vuex)
 
 const api = Axios.create({
-  baseURL: 'https://bcw-sandbox.herokuapp.com/api/MichaelJackson/Bugs'
+  baseURL: 'https://bcw-sandbox.herokuapp.com/api/MichaelJackson/'
 })
 
 
@@ -21,13 +23,17 @@ export default new Vuex.Store({
     setBugs(state, data = []) {
       state.bugs = data
     },
-    setBug(state, data = []) {
-      state.bugs = data
+    setComments(state, data = []) {
+      state.bugComments = data
+    },
+    setBug(state, data) {
+      state.bug = data
+      console.log('bug Obj in setBug', state.bug)
     }
   },
   actions: {
     getBugs({ commit, dispatch }, data) {
-      api.get("")
+      api.get("Bugs/")
         .then(res => {
           commit('setBugs', res.data.results)
           console.log(res)
@@ -36,28 +42,60 @@ export default new Vuex.Store({
           console.error(re)
         })
     },
+    getDetailedView({ commit, dispatch }, id) {
+      router.push({ name: 'detailed', params: { id: id } })
+    },
     getBugById({ commit, dispatch }, id) {
-      api.get(id)
+      api.get("Bugs/" + id)
         .then(res => {
-          commit('setBug', res.data)
+          commit('setBug', res.data.results)
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      // console.log("Bugs/" + id)
+    },
+    getComments({ commit, dispatch }, id) {
+      api.get("Bugs/" + id + "notes")
+        .then(res => {
+          commit('setComments')
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    reportBug({ commit, dispatch }, data) {
+      api.post('Bugs/', data)
+        .then(res => {
+          dispatch('getBugs')
         })
         .catch(err => {
           console.log(err)
         })
     },
-    reportBug({ commit, dispatch }, data) {
-      api.post('', data)
+    postComment({ commit, dispatch }, data, bugId) {
+      api.post('Bugs/' + bugId + "notes", data)
         .then(res => {
-          dispatch('getBugs')
+          dispatch('getComments')
         })
         .catch(err => {
           console.log(err)
         })
     },
     deleteBug({ commit, dispatch }, id) {
-      api.delete(id)
+      api.delete("Bugs/" + id)
         .then(res => {
           dispatch('getBugs')
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    deleteComment({ commit, dispatch }, id) {
+      api.delete("Bugs/" + id + "notes")
+        .then(res => {
+          dispatch('getComments')
         })
         .catch(err => {
           console.error(err)
