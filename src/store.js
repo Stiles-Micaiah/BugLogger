@@ -25,6 +25,7 @@ export default new Vuex.Store({
     },
     setComments(state, data = []) {
       state.bugComments = data
+      console.log('setcomments output, data, state', data, state)
     },
     setBug(state, data) {
       state.bug = data
@@ -59,7 +60,7 @@ export default new Vuex.Store({
     getComments({ commit, dispatch }, id) {
       api.get("Bugs/" + id + "/notes")
         .then(res => {
-          commit('setComments')
+          commit('setComments', res.data.results)
           console.log('getComments', res)
         })
         .catch(err => {
@@ -76,9 +77,10 @@ export default new Vuex.Store({
         })
     },
     postComment({ commit, dispatch }, data) {
-      api.post('Bugs/' + "5cfaecb36d9a220014086b53" + "/notes", data.data)
+      api.post('Bugs/' + data.id + "/notes", data.data)
         .then(res => {
           dispatch('getComments')
+          console.log(res)
         })
         .catch(err => {
           console.log(err)
