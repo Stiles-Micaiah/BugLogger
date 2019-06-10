@@ -60,6 +60,7 @@ export default new Vuex.Store({
       api.get("Bugs/" + id + "notes")
         .then(res => {
           commit('setComments')
+          console.log('getComments', res)
         })
         .catch(err => {
           console.error(err)
@@ -74,8 +75,20 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    postComment({ commit, dispatch }, data, bugId) {
-      api.post('Bugs/' + bugId + "notes", data)
+
+
+async getwhatever({commit, dispatch}, payload) {
+  try {
+    let res = await api.get('/Bugs', payload)
+  } catch(err) {
+    console.error(err)
+  }
+}
+
+
+
+    postComment({ commit, dispatch }, data) {
+      api.post('Bugs/' + data.id + "/notes", data.data)
         .then(res => {
           dispatch('getComments')
         })
