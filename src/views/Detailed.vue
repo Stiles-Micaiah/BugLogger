@@ -3,11 +3,15 @@
     <div style="height: auto;min-width: 300px; max-width: 90%; margin: 25px;" class="text-wrap card card-803 ">
       <h3 class="title-color card-header">{{bug.title}}</h3>
       <h6 class="mix-a-lot">Discovered By:{{bug.user}}</h6>
-
+      <button v-show="!this.bugStatus" class="btn btn-md btn-success" @click="deletePost(bug._id)">Mark as
+        Handled</button>
+      <small v-show="this.bugStatus" style="mix-blend-mode: difference;">
+        This Bug is Dead!
+      </small>
       <div class="card-body">
         <p class=" body-color card-text">{{bug.description}}</p>
       </div>
-    <div class="card-body also-comment-row">
+      <div class="card-body also-comment-row">
         <div class="row">
           <div id="bug-list-loop" v-for="comment in comments" :key="comment._id" class="list-group col-4">
             <a href="javascript:void(0)"
@@ -20,13 +24,24 @@
               <p>{{comment.content}}</p>
             </a>
             <div style="-webkit-text-fill-color: blueviolet;" class="card-footer text-muted">
-                <button class="btn btn-sm btn-sucess rounded" @click="deletePost(this.id)">Mark as Solved</button>
-              </div>
+              <button class="btn btn-sm rounded" @click="deleteComment(comment.bug,comment._id)">Delete Comment</button>
             </div>
           </div>
+          <form v-if="!bug.closed" @submit.prevent="addComment">
+            <label for="title" class="col-sm-2 col-form-label">Title of Report</label>
+            <input id="title" required="true" class="form-control" type="text" v-model="newComment.creator"
+              placeholder="Name">
+            <label for="title" class="col-sm-2 col-form-label">Title of Report</label>
+            <input id="title" required="true" class="form-control" type="text" v-model="newComment.content"
+              placeholder="Content">
+            <button type="submit">submit</button>
+          </form>
         </div>
+      </div>
 
-</div>
+    </div>
+
+
 
 
 
@@ -42,11 +57,10 @@
     props: ["id"],
     data() {
       return {
-        postComment: true,
         newComment: {
           creator: "",
           content: "",
-          bug: JSON.stringify(this.id)
+          bug: this.id
         }
       }
     },
@@ -54,15 +68,18 @@
 
       this.$store.dispatch('getBugById', this.id);
       this.$store.dispatch('getComments', this.id);
-console.log('hey yo', this.$store.dispatch('getComments', this.id));
+      console.log('hey yo', this.$store.dispatch('getComments', this.id));
     },
     computed: {
       bug() {
         return this.$store.state.bug
 
       },
+      bugStatus() {
+        return this.$store.state.bug.closed
+
+      },
       comments() {
-        
         return this.$store.state.bugComments
       },
 
@@ -85,8 +102,12 @@ console.log('hey yo', this.$store.dispatch('getComments', this.id));
       deletePost(id) {
         this.$store.dispatch('deleteBug', id)
       },
-      deleteComment(id) {
-        this.$store.dispatch('deleteComment', id)
+      deleteComment(id, cid) {
+        let commentIdInfo = {
+          id: id,
+          cid: cid
+        }
+        this.$store.dispatch('deleteComment', commentIdInfo)
       },
     },
   }

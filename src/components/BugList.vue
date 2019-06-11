@@ -5,11 +5,9 @@
         <li class="page-item ">
           <a class="page-link" @click="page > 0 ? page-- : page = 0" href="javascript:void(0)">&laquo;</a>
         </li>
-
         <li class="page-item " v-for="pg in pages">
           <a class="page-link" @click="page = pg - 1" href="javascript:void(0)">{{pg}}</a>
         </li>
-
         <li class="page-item">
           <a class="page-link" @click="page < pages ? page++ : page = pages" href="javascript:void(0)">&raquo;</a>
         </li>
@@ -23,40 +21,16 @@
           class="list-group-item list-group-item-action flex-column align-items-start active">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">
-              {{bug.title}}
+              {{bug.title}}<p v-if="bug.closed">inactive</p>
             </h5>
-            <div class="date&details">
-              <!--vvvvvv please HELP with alignment vvvvvvv-->
-
-              <small class="align-items-end">
-                <!--^^^^please HELP with alignment^^^^^^-->
-                {{timeSince(bug._id)}}
-              </small>
-              <button class="btn btn-sm btn-info d-flex flex-column rounded" @click="getDetails(bug._id)">
-                Details
-              </button>
-            </div>
+            <button class="btn btn-sm btn-info d-flex flex-column rounded" @click="getDetails(bug._id)">
+              Details
+            </button>
           </div>
+          <hr />
           <p class="mb-1">
             {{bug.description}}
           </p>
-          ////
-        </a>
-        <a href="javascript:void(0)" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">
-              Comments & Notes
-            </h5>
-            <small class="text-muted">
-              --latest comment--
-            </small>
-          </div>
-          <ul class="mb-1">
-            --comments--
-          </ul>
-          <small class="text-muted">
-            {{bug.updated}}
-          </small>
         </a>
       </div>
     </div>
@@ -70,29 +44,26 @@
     data() {
       return {
         page: 0,
+        template: []
       }
     },
     mounted() {
       this.$store.dispatch("getBugs");
-      // var listLength = $('#bug-list-group .loop-this').length;
-      // alert($('#bug-list-group .loop-this').length);
-      // var limitPerPage = 4;
-      // var itemsHide = $("#bug-list-group .loop-this:gt(" + (limitPerPage - 1) + ")")
-      // itemsHide.hide();
     },
 
 
 
     computed: {
       bugs() {
-        return this.$store.state.bugs
+        return this.$store.state.bugs.reverse()
       },
       activeBugs() {
-        return this.bugs.slice(this.page * 4, this.page * 4 + 4);
+        return this.bugs.slice(this.page * 6, this.page * 6 + 6);
       },
       pages() {
-        return Math.ceil(this.bugs.length / 4)
-      }
+        return Math.ceil(this.bugs.length / 6)
+      },
+
 
     },
     methods: {
@@ -102,14 +73,6 @@
       deletePost(data) {
         this.$store.dispatch('deleteBug', data)
       },
-      timeSince(id) {
-        let time = new Date()
-        let result = this.$store.state.bugs.filter(obj => {
-          return obj._id === id
-        })
-        let idDate = new Date(result.created)
-        return (time - idDate) / (24 * 3600 * 1000)
-      }
     },
     props: {
     }

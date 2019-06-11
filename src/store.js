@@ -79,7 +79,7 @@ export default new Vuex.Store({
     postComment({ commit, dispatch }, data) {
       api.post('Bugs/' + data.id + "/notes", data.data)
         .then(res => {
-          dispatch('getComments')
+          dispatch('getComments', data.id)
           console.log(res)
         })
         .catch(err => {
@@ -96,9 +96,9 @@ export default new Vuex.Store({
         })
     },
     deleteComment({ commit, dispatch }, id) {
-      api.delete("Bugs/" + id + "/notes" + id)
+      api.delete("Bugs/" + id.id + "/notes" + "/" + id.cid)
         .then(res => {
-          dispatch('getComments')
+          dispatch('getComments', id.id)
         })
         .catch(err => {
           console.error(err)
