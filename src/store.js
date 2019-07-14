@@ -7,7 +7,7 @@ import { stat } from 'fs';
 Vue.use(Vuex)
 
 const api = Axios.create({
-  baseURL: 'https://bcw-sandbox.herokuapp.com/api/MichaelJackson/'
+  baseURL: 'https://bcw-sandbox.herokuapp.com/api/Demo/'
 })
 
 
