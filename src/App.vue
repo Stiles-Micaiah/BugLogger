@@ -33,9 +33,9 @@
 <script>
   export default {
     name: 'Navbar',
-    mounted() {
-      alert('v-if and v-show is a load of bullshit. they are not reactive. vue is broken, they need to update it')
-    }
+    // mounted() {
+    //   //  alert('v-if and v-show is a load of bullshit. they are not reactive. vue is broken, they need to update it')
+    // }
 
   }
 </script>
