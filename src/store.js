@@ -17,7 +17,8 @@ export default new Vuex.Store({
   state: {
     bugs: [],
     bug: {},
-    bugComments: []
+    bugComments: [],
+    qBug: []
   },
   mutations: {
     setBugs(state, data = []) {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     setBug(state, data) {
       state.bug = data
       console.log('bug Obj in setBug', state.bug)
+    },
+    setQBugs(state, data) {
+      state.qBug = data
     }
   },
   actions: {
@@ -103,6 +107,29 @@ export default new Vuex.Store({
         .catch(err => {
           console.error(err)
         })
+    },
+    search({ commit, dispatch }, query) {
+      dispatch('getBugs');
+      
+      let bugQuery = [];
+      
+      for (let i = 0; i < this.state.bugs.length; i++) {
+        
+        let element = query[i];
+        
+        let elementT = query[i].title;
+        
+        let elem = query;
+        // let elem = query.split(' ');
+        
+        if (elementT.search(elem) != -1) {
+          bugQuery.push(element);
+        }
+        
+      }
+      commit('setQBugs', bugQuery);
+      router.push({ name: 'search'});
+
     }
   }
 })

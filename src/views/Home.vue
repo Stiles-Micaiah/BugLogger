@@ -18,7 +18,7 @@
     },
 
     mounted() {
-      $('.PostForm').hide()
+      // $('.PostForm').hide()
 
     }
   }

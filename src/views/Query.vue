@@ -48,14 +48,16 @@
       }
     },
     mounted() {
-      this.$store.dispatch("getBugs");
+      if (!this.$store.state.qBug) {
+        router.push('home');
+      }
     },
 
 
 
     computed: {
       bugs() {
-        return this.$store.state.bugs.reverse()
+        return this.$store.state.qBug.reverse()
       },
       activeBugs() {
         return this.bugs.slice(this.page * 6, this.page * 6 + 6);
@@ -83,17 +85,17 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   /* tr,
-  tr td {
-    margin-top: 15px;
-  }
-
-  tr {
-    width: 80%;
-  } */
+    tr td {
+      margin-top: 15px;
+    }
+  
+    tr {
+      width: 80%;
+    } */
 
   /* td {
-    width: 0vw;
-  } */
+      width: 0vw;
+    } */
 
   .pageinator-personal>li {
     border: #ff00ea;

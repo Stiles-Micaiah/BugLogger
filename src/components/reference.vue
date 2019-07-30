@@ -1,7 +1,6 @@
 <template>
 
 
-  ////////
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
 
@@ -26,7 +25,6 @@
     </div>
   </div>
 
-  /////////
 
 
 </template>
@@ -34,7 +32,6 @@
 
 
 <script>
-  //////////////////////
   var DateDiff = {
 
     inDays: function (d1, d2) {
@@ -74,7 +71,6 @@
   document.write("<br />Number of <b>weeks</b> since " + dString + ": " + DateDiff.inWeeks(d1, d2));
   document.write("<br />Number of <b>months</b> since " + dString + ": " + DateDiff.inMonths(d1, d2));
   document.write("<br />Number of <b>years</b> since " + dString + ": " + DateDiff.inYears(d1, d2));
-//////////////////////////
 
 
 
