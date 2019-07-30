@@ -23,9 +23,9 @@
           </li>
         </ul>
         <!-- <img class="float-rightKs" style="height: 9vh; width: auto;" alt="Vue logo" src="@/assets/ScarabH3.png"> -->
-        <form @submit.prevent="search()" class="form-inline search-form-nav my-2 my-lg-0">
+        <form @submit.prevent="search" class="form-inline search-form-nav my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" v-model="searchQuery" placeholder="Search BugList">
-          <button class="btn btn-primary my-2 my-sm-0" type="submit" >Search</button>
+          <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
     </nav>
@@ -36,20 +36,19 @@
 <script>
   export default {
     name: 'Navbar',
-    data(){
+    data() {
       return {
-searchQuery: ""
+        searchQuery: ""
       }
     },
     // mounted() {
     //   //  alert('v-if and v-show is a load of bullshit. they are not reactive. vue is broken, they need to update it')
     // },
-methods: {
-  search() {
-    
-    this.$store.dispatch('search', ...this.searchQuery);
-  }
-}
+    methods: {
+      search() {
+        this.$store.dispatch('search', ...this.searchQuery);
+      }
+    }
 
   }
 </script>

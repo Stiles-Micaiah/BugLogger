@@ -114,12 +114,14 @@ export default new Vuex.Store({
       let bugQuery = [];
       
       for (let i = 0; i < this.state.bugs.length; i++) {
+        let baseElem = this.state.bugs;
+
+        let element = baseElem[i];
         
-        let element = query[i];
-        
-        let elementT = query[i].title;
+        let elementT = baseElem[i].title.toLowerCase();
         
         let elem = query;
+
         // let elem = query.split(' ');
         
         if (elementT.search(elem) != -1) {
@@ -128,7 +130,7 @@ export default new Vuex.Store({
         
       }
       commit('setQBugs', bugQuery);
-      router.push({ name: 'search'});
+      router.push({ name: 'query'});
 
     }
   }
